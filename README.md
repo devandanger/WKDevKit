@@ -1,3 +1,8 @@
+
+<p align="center">
+  <img src="assets/logo.png" alt="WKDevKit Logo" width="120" />
+</p>
+
 # WKDevKit
 
 A lightweight developer toolkit for inspecting WKWebView internals — built for SwiftUI.
