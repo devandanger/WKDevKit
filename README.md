@@ -1,4 +1,4 @@
-# InAppWebViewInspector
+# WKDevKit
 
 An iOS app that provides in-app debugging capabilities for WKWebView without relying on Safari Web Inspector. Built with SwiftUI for iOS 18.5+.
 
