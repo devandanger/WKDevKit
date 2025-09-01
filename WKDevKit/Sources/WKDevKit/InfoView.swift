@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+#if os(iOS)
+@available(iOS 15.0, *)
 struct InfoView: View {
     let url: URL
     
@@ -35,3 +37,4 @@ struct InfoView: View {
         .background(Color.white)
     }
 }
+#endif

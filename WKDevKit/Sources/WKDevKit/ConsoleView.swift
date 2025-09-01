@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+#if os(iOS)
+@available(iOS 15.0, *)
 struct ConsoleView: View {
     let logs: [ConsoleMessage]
     
@@ -115,3 +117,4 @@ struct ConsoleLogRow: View {
         )
     }
 }
+#endif

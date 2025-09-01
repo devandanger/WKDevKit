@@ -7,26 +7,29 @@
 
 import SwiftUI
 import SwiftData
+#if os(iOS)
 import SafariServices
+#endif
 import WKDevKit
 
+#if os(iOS)
 enum WebViewType: String, CaseIterable {
-    case safariInternal = "Safari Internal"
-    case externalSafari = "External Safari"
-    case embeddedWebView = "Embedded WebView"
+    case embeddedWebView = "Embedded WebView (Legacy)"
+    case compositionBased = "Composition Based (New)"
     
     var title: String {
         return self.rawValue
     }
 }
 
-struct ContentView: View {
+@available(iOS 15.0, *)
+public struct ContentView: View {
     @State private var urlText: String = "https://www.google.com"
-    @State private var selectedWebViewType: WebViewType = .embeddedWebView
-    @State private var showingSafariView = false
+    @State private var selectedWebViewType: WebViewType = .compositionBased
     @State private var showingEmbeddedWebView = false
+    @State private var showingCompositionView = false
     
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 30) {
             Text("WebView Inspector")
                 .font(.title)
@@ -59,13 +62,11 @@ struct ContentView: View {
         }
         .navigationTitle("Inspector")
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $showingSafariView) {
-            if let url = URL(string: urlText) {
-                SafariView(url: url)
-            }
-        }
         .sheet(isPresented: $showingEmbeddedWebView) {
             EmbeddedWebViewScreen(urlString: urlText)
+        }
+        .sheet(isPresented: $showingCompositionView) {
+            CompositionExampleView(urlString: urlText)
         }
     }
     
@@ -76,12 +77,11 @@ struct ContentView: View {
         }
         
         switch selectedWebViewType {
-        case .safariInternal:
-            showingSafariView = true
-        case .externalSafari:
-            UIApplication.shared.open(url)
+
         case .embeddedWebView:
             showingEmbeddedWebView = true
+        case .compositionBased:
+            showingCompositionView = true
         }
     }
 }
@@ -102,3 +102,4 @@ struct SafariView: UIViewControllerRepresentable {
 #Preview {
     ContentView()
 }
+#endif

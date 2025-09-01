@@ -8,6 +8,9 @@
 import SwiftUI
 import WebKit
 import Combine
+#if os(iOS)
+import UIKit
+#endif
 
 class ConsoleMessageHandler: NSObject, WKScriptMessageHandler {
     let onMessage: (ConsoleMessage) -> Void
@@ -30,45 +33,45 @@ class ConsoleMessageHandler: NSObject, WKScriptMessageHandler {
     }
 }
 
-struct ConsoleMessage: Identifiable {
-    let id = UUID()
-    let method: String
-    let args: String
-    let timestamp: Date
+public struct ConsoleMessage: Identifiable {
+    public let id = UUID()
+    public let method: String
+    public let args: String
+    public let timestamp: Date
     
-    init(method: String, args: String, timestamp: Date) {
+    public init(method: String, args: String, timestamp: Date) {
         self.method = method
         self.args = args
         self.timestamp = timestamp
     }
 }
 
-struct WebStorageItem: Identifiable {
-    let id = UUID()
-    let key: String
-    let value: String
-    let type: WebStorageType
+public struct WebStorageItem: Identifiable {
+    public let id = UUID()
+    public let key: String
+    public let value: String
+    public let type: WebStorageType
     
-    init(key: String, value: String, type: WebStorageType) {
+    public init(key: String, value: String, type: WebStorageType) {
         self.key = key
         self.value = value
         self.type = type
     }
 }
 
-enum WebStorageType: String, CaseIterable {
+public enum WebStorageType: String, CaseIterable, Sendable {
     case localStorage = "Local Storage"
     case sessionStorage = "Session Storage"
     case cookies = "Cookies"
 }
 
-struct DOMNode: Identifiable, Decodable {
-    let id = UUID()
-    let tag: String
-    let idAttr: String
-    let className: String
-    let innerText: String?
-    let children: [DOMNode]
+public struct DOMNode: Identifiable, Decodable {
+    public let id = UUID()
+    public let tag: String
+    public let idAttr: String
+    public let className: String
+    public let innerText: String?
+    public let children: [DOMNode]
     
     enum CodingKeys: String, CodingKey {
         case tag, idAttr = "id", className, innerText, children
@@ -238,6 +241,9 @@ class WebViewModel: ObservableObject {
     }
 }
 
+#if os(iOS)
+@available(iOS 15.0, *)
+@available(*, deprecated, message: "Use WKWebView.addDevKitDebugging() for composition-based debugging instead")
 struct WebView: UIViewRepresentable {
     let url: URL
     @Binding var consoleLogs: [ConsoleMessage]
@@ -253,6 +259,7 @@ struct WebView: UIViewRepresentable {
         Coordinator(self)
     }
     
+    @MainActor
     func makeUIView(context: Context) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         
@@ -307,3 +314,4 @@ struct WebView: UIViewRepresentable {
         }
     }
 }
+#endif

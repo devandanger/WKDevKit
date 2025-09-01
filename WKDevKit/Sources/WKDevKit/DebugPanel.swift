@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+#if os(iOS)
+@available(iOS 15.0, *)
 struct DebugPanel: View {
     let url: URL
     @Binding var consoleLogs: [ConsoleMessage]
@@ -81,3 +83,4 @@ struct DebugPanel: View {
         }
     }
 }
+#endif
