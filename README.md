@@ -1,6 +1,15 @@
 # WKDevKit
 
-An iOS app that provides in-app debugging capabilities for WKWebView without relying on Safari Web Inspector. Built with SwiftUI for iOS 18.5+.
+A lightweight developer toolkit for inspecting WKWebView internals — built for SwiftUI.
+Explore localStorage, sessionStorage, cookies, and the live DOM tree, right inside your iOS app.
+
+⚠️ Disclaimer: Still in Development
+
+Heads up!
+WKDevKit is under active development.
+APIs, data models, and behaviors may change without notice as features stabilize.
+
+We welcome issues, pull requests, and feedback — but please don’t rely on a stable public API just yet. Breaking changes are likely as the project evolves.
 
 ## Features
 
