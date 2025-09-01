@@ -18,14 +18,6 @@ We welcome issues, pull requests, and feedback — but please don’t rely on a 
 
 ## Features
 
-### WebView Launch Options
-
-The app supports three ways to launch web content:
-
-1. **Safari Internal** - Opens URLs in SFSafariViewController (in-app browser)
-2. **External Safari** - Opens URLs in the device's Safari app
-3. **Embedded WebView** - Opens URLs in a custom WKWebView with debugging capabilities
-
 ### Debug Panel
 
 The embedded WebView includes a comprehensive Debug Panel accessible via the Debug button in the navigation bar. The panel provides three main tabs:
@@ -156,7 +148,7 @@ InAppWebViewInspector/
 
 ## Building
 
-1. Open `InAppWebViewInspector.xcodeproj` in Xcode
+1. Open `ExampleApp.xcodeproj` in Xcode
 2. Select your target device or simulator
 3. Build and run (Cmd+R)
 
@@ -207,13 +199,7 @@ The Storage Inspector shows localStorage, sessionStorage, and cookies in organiz
 
 ## Future Enhancements
 
-Potential areas for expansion:
-- Network request interception and monitoring
-- JavaScript execution console
-- CSS style inspection
-- Performance metrics
-- Advanced cookie management features
-- Storage item editing capabilities
+See [PROJECT_PLAN.md](./PROJECT_PLAN.md)
 
 ## License
 
