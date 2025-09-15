@@ -21,6 +21,9 @@ public struct WKDevKitConfiguration: Sendable {
     /// Enable web inspector (iOS 16.4+)
     public var enableWebInspector: Bool = true
     
+    /// Enable event capture for all WebView delegates
+    public var enableEventCapture: Bool = true
+    
     /// Which storage types to inspect
     public var storageTypes: Set<WebStorageType> = [.localStorage, .sessionStorage, .cookies]
     
@@ -35,7 +38,8 @@ public struct WKDevKitConfiguration: Sendable {
         enableConsoleLogging: true,
         enableDOMInspection: false,
         enableStorageInspection: false,
-        enableWebInspector: false
+        enableWebInspector: false,
+        enableEventCapture: false
     )
     
     /// Configuration for production builds (all features disabled)
@@ -43,7 +47,8 @@ public struct WKDevKitConfiguration: Sendable {
         enableConsoleLogging: false,
         enableDOMInspection: false,
         enableStorageInspection: false,
-        enableWebInspector: false
+        enableWebInspector: false,
+        enableEventCapture: false
     )
     
     public init(
@@ -51,6 +56,7 @@ public struct WKDevKitConfiguration: Sendable {
         enableDOMInspection: Bool = true,
         enableStorageInspection: Bool = true,
         enableWebInspector: Bool = true,
+        enableEventCapture: Bool = true,
         storageTypes: Set<WebStorageType> = [.localStorage, .sessionStorage, .cookies],
         maxConsoleLogCount: Int = 1000
     ) {
@@ -58,6 +64,7 @@ public struct WKDevKitConfiguration: Sendable {
         self.enableDOMInspection = enableDOMInspection
         self.enableStorageInspection = enableStorageInspection
         self.enableWebInspector = enableWebInspector
+        self.enableEventCapture = enableEventCapture
         self.storageTypes = storageTypes
         self.maxConsoleLogCount = maxConsoleLogCount
     }
@@ -94,6 +101,12 @@ public struct WKDevKitConfiguration: Sendable {
         @discardableResult
         public func withWebInspector(_ enabled: Bool) -> Builder {
             config.enableWebInspector = enabled
+            return self
+        }
+        
+        @discardableResult
+        public func withEventCapture(_ enabled: Bool) -> Builder {
+            config.enableEventCapture = enabled
             return self
         }
         

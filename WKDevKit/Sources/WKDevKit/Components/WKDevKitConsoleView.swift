@@ -9,7 +9,7 @@ import SwiftUI
 
 #if os(iOS)
 /// Standalone console view that displays console messages
-@available(iOS 15.0, *)
+
 public struct WKDevKitConsoleView: View {
     public let messages: [ConsoleMessage]
     @State private var searchText = ""
@@ -116,7 +116,7 @@ public struct WKDevKitConsoleView: View {
     }
 }
 
-@available(iOS 15.0, *)
+
 private struct ConsoleMessageRow: View {
     let message: ConsoleMessage
     

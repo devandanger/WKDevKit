@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8A0E6EBD2E661B54003C9C35 /* WKDevKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8A0E6EBC2E661B54003C9C35 /* WKDevKit */; };
 		8A3498CD2E65D8F500025788 /* WKDevKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8A3498CC2E65D8F500025788 /* WKDevKit */; };
+		8AA140652E674D6C00524837 /* WKDevKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8AA140642E674D6C00524837 /* WKDevKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A3498CD2E65D8F500025788 /* WKDevKit in Frameworks */,
+				8AA140652E674D6C00524837 /* WKDevKit in Frameworks */,
 				8A0E6EBD2E661B54003C9C35 /* WKDevKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -74,6 +76,7 @@
 			packageProductDependencies = (
 				8A3498CC2E65D8F500025788 /* WKDevKit */,
 				8A0E6EBC2E661B54003C9C35 /* WKDevKit */,
+				8AA140642E674D6C00524837 /* WKDevKit */,
 			);
 			productName = InAppWebViewInspector;
 			productReference = 8A15CDE62E54EAD3007A7616 /* ExampleApp.app */;
@@ -104,7 +107,7 @@
 			mainGroup = 8A15CDDD2E54EAD3007A7616;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				8A0E6EBB2E661B54003C9C35 /* XCLocalSwiftPackageReference "../WKDevKit" */,
+				8AA140632E674D6C00524837 /* XCLocalSwiftPackageReference "../WKDevKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8A15CDE72E54EAD3007A7616 /* Products */;
@@ -338,7 +341,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		8A0E6EBB2E661B54003C9C35 /* XCLocalSwiftPackageReference "../WKDevKit" */ = {
+		8AA140632E674D6C00524837 /* XCLocalSwiftPackageReference "../WKDevKit" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../WKDevKit;
 		};
@@ -350,6 +353,10 @@
 			productName = WKDevKit;
 		};
 		8A3498CC2E65D8F500025788 /* WKDevKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WKDevKit;
+		};
+		8AA140642E674D6C00524837 /* WKDevKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WKDevKit;
 		};

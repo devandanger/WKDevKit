@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import WKDevKit
 
-@available(iOS 15.0, *)
+
 public class UIKitExampleViewController: UIViewController {
     private var webView: WKWebView!
     private var debugger: WKDevKitDebugger?

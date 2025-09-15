@@ -8,7 +8,7 @@
 import SwiftUI
 
 #if os(iOS)
-@available(iOS 15.0, *)
+
 @available(*, deprecated, message: "Use custom WebView with WKWebView.addDevKitDebugging() and standalone components instead")
 public struct EmbeddedWebViewScreen: View {
     let urlString: String

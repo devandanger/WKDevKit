@@ -11,7 +11,7 @@ import WebKit
 import WKDevKit
 
 #if os(iOS)
-@available(iOS 15.0, *)
+
 public struct CompositionExampleView: View {
     let urlString: String
     
@@ -187,6 +187,15 @@ public struct CompositionDebugPanel: View {
                     if storageItems.isEmpty {
                         loadStorage()
                     }
+                }
+                
+                // Events tab using the new events view
+                if let eventsViewModel = webViewStore.debugger?.eventsViewModel {
+                    WKWebViewEventsView(eventsViewModel: eventsViewModel)
+                        .tabItem {
+                            Label("Events", systemImage: "list.bullet.rectangle")
+                        }
+                        .tag(3)
                 }
             }
             .navigationTitle("Debug Panel")

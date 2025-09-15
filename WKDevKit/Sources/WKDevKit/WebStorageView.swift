@@ -8,7 +8,7 @@
 import SwiftUI
 
 #if os(iOS)
-@available(iOS 15.0, *)
+
 struct WebStorageView: View {
     let items: [WebStorageItem]
     let isLoading: Bool

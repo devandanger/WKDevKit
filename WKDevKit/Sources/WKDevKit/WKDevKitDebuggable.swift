@@ -9,7 +9,7 @@ import WebKit
 
 #if os(iOS)
 /// Protocol that can be adopted by any WKWebView to enable debugging
-@available(iOS 15.0, *)
+
 @MainActor
 public protocol WKDevKitDebuggable: AnyObject {
     /// The debugger instance attached to this WebView
@@ -26,7 +26,7 @@ public protocol WKDevKitDebuggable: AnyObject {
 }
 
 /// Default implementation for WKWebView
-@available(iOS 15.0, *)
+
 extension WKWebView: WKDevKitDebuggable {
     public func enableDebugging(configuration: WKDevKitConfiguration = .default) -> WKDevKitDebugger {
         return addDevKitDebugging(configuration: configuration)
@@ -38,14 +38,14 @@ extension WKWebView: WKDevKitDebuggable {
 }
 
 /// Convenience protocol for custom WebView implementations
-@available(iOS 15.0, *)
+
 public protocol CustomWebViewDebuggable: WKDevKitDebuggable {
     /// The underlying WKWebView instance
     var webView: WKWebView { get }
 }
 
 /// Default implementation for custom WebView wrappers
-@available(iOS 15.0, *)
+
 extension CustomWebViewDebuggable {
     public var devKitDebugger: WKDevKitDebugger? {
         return webView.devKitDebugger

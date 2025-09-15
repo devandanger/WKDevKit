@@ -8,7 +8,7 @@
 #if os(iOS)
 import UIKit
 import WebKit
-@available(iOS 15.0, *)
+
 public class WKDevKitStorageViewController: UIViewController {
     private let webView: WKWebView
     private var debugger: WKDevKitDebugger?

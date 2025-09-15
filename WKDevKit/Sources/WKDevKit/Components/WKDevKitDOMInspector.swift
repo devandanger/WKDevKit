@@ -9,7 +9,7 @@ import SwiftUI
 
 #if os(iOS)
 /// Standalone DOM inspector view
-@available(iOS 15.0, *)
+
 public struct WKDevKitDOMInspector: View {
     public let rootNode: DOMNode?
     @State private var searchText = ""
@@ -87,7 +87,7 @@ public struct WKDevKitDOMInspector: View {
     }
 }
 
-@available(iOS 15.0, *)
+
 private struct WKDevKitDOMNodeView: View {
     let node: DOMNode
     let searchText: String

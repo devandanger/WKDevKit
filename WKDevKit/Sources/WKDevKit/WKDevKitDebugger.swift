@@ -10,7 +10,7 @@ import Combine
 
 #if os(iOS)
 /// Main debugger class that can be attached to any WKWebView
-@available(iOS 15.0, *)
+
 @MainActor
 public class WKDevKitDebugger: ObservableObject {
     private weak var webView: WKWebView?
@@ -18,8 +18,20 @@ public class WKDevKitDebugger: ObservableObject {
     private var consoleHandler: ConsoleMessageHandler?
     private var messageHandlerName = "wkdevkit_console"
     
+    // Delegate proxies
+    private var navigationProxy: NavigationDelegateProxy?
+    private var uiDelegateProxy: UIDelegateProxy?
+    private var scriptMessageProxies: [String: ScriptMessageHandlerProxy] = [:]
+    
+    // Original delegates
+    private weak var originalNavigationDelegate: WKNavigationDelegate?
+    private weak var originalUIDelegate: WKUIDelegate?
+    
     /// Published array of console messages
     @Published public private(set) var consoleLogs: [ConsoleMessage] = []
+    
+    /// Events view model for capturing WebView events
+    public let eventsViewModel = EventsViewModel()
     
     /// Publisher for console messages
     public var consoleMessagePublisher: AnyPublisher<ConsoleMessage, Never> {
@@ -32,6 +44,10 @@ public class WKDevKitDebugger: ObservableObject {
         self.webView = webView
         self.configuration = configuration
         setupDebugCapabilities()
+        
+        if configuration.enableEventCapture {
+            setupEventCapture()
+        }
     }
     
     private func setupDebugCapabilities() {
@@ -269,11 +285,91 @@ public class WKDevKitDebugger: ObservableObject {
         return try await webView.evaluateJavaScript(script)
     }
     
+    /// Setup event capture by wrapping delegates
+    private func setupEventCapture() {
+        guard let webView = webView else { return }
+        
+        // Wrap navigation delegate
+        if let currentNavDelegate = webView.navigationDelegate {
+            originalNavigationDelegate = currentNavDelegate
+        }
+        navigationProxy = NavigationDelegateProxy(
+            originalDelegate: originalNavigationDelegate,
+            eventsViewModel: eventsViewModel
+        )
+        webView.navigationDelegate = navigationProxy
+        
+        // Wrap UI delegate
+        if let currentUIDelegate = webView.uiDelegate {
+            originalUIDelegate = currentUIDelegate
+        }
+        uiDelegateProxy = UIDelegateProxy(
+            originalDelegate: originalUIDelegate,
+            eventsViewModel: eventsViewModel
+        )
+        webView.uiDelegate = uiDelegateProxy
+        
+        // Note: Download delegate is handled at the WebView level, not configuration
+        // We'll provide a method to set it
+    }
+    
+    
+    /// Add a script message handler with event capture
+    public func addScriptMessageHandler(name: String, handler: WKScriptMessageHandler) {
+        guard let webView = webView else { return }
+        
+        if configuration.enableEventCapture {
+            let proxy = ScriptMessageHandlerProxy(
+                handlerName: name,
+                originalHandler: handler,
+                eventsViewModel: eventsViewModel
+            )
+            scriptMessageProxies[name] = proxy
+            webView.configuration.userContentController.add(proxy, name: name)
+        } else {
+            webView.configuration.userContentController.add(handler, name: name)
+        }
+    }
+    
+    /// Remove a script message handler
+    public func removeScriptMessageHandler(name: String) {
+        guard let webView = webView else { return }
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: name)
+        scriptMessageProxies.removeValue(forKey: name)
+    }
+    
+    /// Restore original delegates
+    private func restoreOriginalDelegates() {
+        guard let webView = webView else { return }
+        
+        if originalNavigationDelegate != nil || navigationProxy != nil {
+            webView.navigationDelegate = originalNavigationDelegate
+        }
+        
+        if originalUIDelegate != nil || uiDelegateProxy != nil {
+            webView.uiDelegate = originalUIDelegate
+        }
+        
+    }
+    
     /// Clean up and remove message handlers
     public func cleanup() {
         guard let webView = webView else { return }
+        
+        // Remove console handler
         webView.configuration.userContentController.removeScriptMessageHandler(forName: messageHandlerName)
         consoleHandler = nil
+        
+        // Restore original delegates
+        if configuration.enableEventCapture {
+            restoreOriginalDelegates()
+        }
+        
+        // Remove script message handlers
+        for name in scriptMessageProxies.keys {
+            webView.configuration.userContentController.removeScriptMessageHandler(forName: name)
+        }
+        scriptMessageProxies.removeAll()
     }
     
     deinit {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 #if os(iOS)
-@available(iOS 15.0, *)
+
 struct DOMInspectorView: View {
     let domTree: DOMNode?
     let isLoading: Bool

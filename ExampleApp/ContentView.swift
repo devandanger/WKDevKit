@@ -22,7 +22,7 @@ enum WebViewType: String, CaseIterable {
     }
 }
 
-@available(iOS 15.0, *)
+
 public struct ContentView: View {
     @State private var urlText: String = "https://www.google.com"
     @State private var selectedWebViewType: WebViewType = .compositionBased

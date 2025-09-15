@@ -242,7 +242,7 @@ class WebViewModel: ObservableObject {
 }
 
 #if os(iOS)
-@available(iOS 15.0, *)
+
 @available(*, deprecated, message: "Use WKWebView.addDevKitDebugging() for composition-based debugging instead")
 struct WebView: UIViewRepresentable {
     let url: URL

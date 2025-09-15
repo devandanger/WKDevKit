@@ -14,7 +14,7 @@ private enum AssociationKey {
     static let debugger = UnsafeMutableRawPointer.allocate(byteCount: 1, alignment: 1)
 }
 
-@available(iOS 15.0, *)
+
 public extension WKWebView {
     /// Add WKDevKit debugging capabilities to this WebView
     /// - Parameter configuration: Configuration for debugging features

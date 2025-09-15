@@ -8,7 +8,7 @@
 #if os(iOS)
 import UIKit
 import Combine
-@available(iOS 15.0, *)
+
 public class WKDevKitConsoleViewController: UIViewController {
     public var debugger: WKDevKitDebugger? {
         didSet {

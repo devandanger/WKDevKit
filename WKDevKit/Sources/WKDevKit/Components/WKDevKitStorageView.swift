@@ -9,7 +9,7 @@ import SwiftUI
 
 #if os(iOS)
 /// Standalone web storage viewer
-@available(iOS 15.0, *)
+
 public struct WKDevKitStorageView: View {
     public let items: [WebStorageItem]
     @State private var searchText = ""
@@ -118,7 +118,7 @@ public struct WKDevKitStorageView: View {
     }
 }
 
-@available(iOS 15.0, *)
+
 private struct StorageSectionHeader: View {
     let type: WebStorageType
     let count: Int
@@ -146,7 +146,7 @@ private struct StorageSectionHeader: View {
     }
 }
 
-@available(iOS 15.0, *)
+
 private struct StorageItemRow: View {
     let item: WebStorageItem
     let searchText: String
